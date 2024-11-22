@@ -1,6 +1,6 @@
 @echo off
 
-if "%PORT%"=="" (
+if "%PORT%"=="COM9" (
     if "%~1"=="" (
         echo No port specified. Exiting.
         exit /b 1
