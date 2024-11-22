@@ -174,3 +174,25 @@ def load_game_config(file_path, ser):
             print("Configuration file not found. Please provide a valid path.")
     except Exception as e:
         print(f"Error loading configuration: {e}")
+
+if __name__ == "__main__":
+    ser = setup_serial_port()
+    can_input = True
+    exit_program = False
+    last_received_time = time.time()
+
+    threading.Thread(target=monitor_incoming_messages, args=(ser,), daemon=True).start()
+    threading.Thread(target=user_input_thread, args=(ser,), daemon=True).start()
+
+    try:
+        while not exit_program:
+            if time.time() - last_received_time >= 1 and can_input:
+                pass
+            else:
+                time.sleep(0.1)
+    except KeyboardInterrupt:
+        print("Exit!")
+    finally:
+        if ser.is_open:
+            print("Closing serial port...")
+            ser.close()
