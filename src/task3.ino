@@ -4,11 +4,22 @@ bool gameActive = false;
 String playerChoices[3] = {"Rock", "Paper", "Scissors"};
 int gameMode = 0;
 
+/**
+ * @brief Represents the game configuration structure.
+ * 
+ * Contains the current game mode and player choices for the game.
+ */
 struct GameConfig {
-  int gameMode;
-  String playerChoices[3];
+  int gameMode; /**< Current game mode (0: Human vs AI, 1: Human vs Human, 2: AI vs AI) */
+  String playerChoices[3]; /**< Array of player choices: Rock, Paper, Scissors */
 };
 
+/**
+ * @brief Converts the game configuration into an INI-style string.
+ * 
+ * @param config The game configuration structure to save.
+ * @return A string representation of the configuration in INI format.
+ */
 String saveConfig(const GameConfig &config) {
   String iniConfig;
   
@@ -20,6 +31,14 @@ String saveConfig(const GameConfig &config) {
   return iniConfig;
 }
 
+/**
+ * @brief Parses a single line of configuration in INI format.
+ * 
+ * @param line The configuration line to parse.
+ * @param gameMode The game mode to be updated.
+ * @param playerChoices Array of player choices to be updated.
+ * @return True if the line is parsed successfully, false otherwise.
+ */
 bool parseConfigLine(const String &line, int &gameMode, String playerChoices[]) {
   int keyEnd = line.indexOf('=');
   if (keyEnd == -1) return false;
@@ -44,6 +63,14 @@ bool parseConfigLine(const String &line, int &gameMode, String playerChoices[]) 
   return true;
 }
 
+/**
+ * @brief Loads the configuration from an INI-style string.
+ * 
+ * @param iniConfig The INI-style string containing the configuration.
+ * @param gameMode The game mode to be set.
+ * @param playerChoices Array of player choices to be set.
+ * @return True if the configuration was successfully loaded, false otherwise.
+ */
 bool loadConfig(const String &iniConfig, int &gameMode, String playerChoices[]) {
   String line;
   bool success = true;
@@ -63,13 +90,23 @@ bool loadConfig(const String &iniConfig, int &gameMode, String playerChoices[]) 
   return success;
 }
 
-
-
+/**
+ * @brief Generates a random choice for the AI.
+ * 
+ * @return A string representing the AI's choice: Rock, Paper, or Scissors.
+ */
 String generateAIChoice() {
   int randomIndex = random(0, 3);
   return playerChoices[randomIndex];
 }
 
+/**
+ * @brief Determines the winner between two players.
+ * 
+ * @param player1 The first player's choice.
+ * @param player2 The second player's choice.
+ * @return A string indicating the result of the match: "Draw", "Player 1 wins!", or "Player 2 wins!".
+ */
 String determineWinner(String player1, String player2) {
   int indexRock = 0;
   int indexPaper = 1;
@@ -86,6 +123,12 @@ String determineWinner(String player1, String player2) {
   return "Player 2 wins!";
 }
 
+/**
+ * @brief Validates if a given move is a valid choice (Rock, Paper, or Scissors).
+ * 
+ * @param move The move to validate.
+ * @return True if the move is valid, false otherwise.
+ */
 bool isValidMove(String move) {
   for (int i = 0; i < 3; i++) {
     if (move == playerChoices[i]) {
@@ -95,11 +138,19 @@ bool isValidMove(String move) {
   return false;
 }
 
+/**
+ * @brief Initializes the game state, starting a new game.
+ */
 void initializeGame() {
   gameActive = true;
   Serial.println("Game started!");
 }
 
+/**
+ * @brief Processes a Human vs AI game move.
+ * 
+ * @param humanChoice The human player's choice.
+ */
 void processHumanVsAI(String humanChoice) {
   if (!isValidMove(humanChoice)) {
     Serial.println("Invalid move. Valid moves are: Rock, Paper, Scissors.");
@@ -114,6 +165,9 @@ void processHumanVsAI(String humanChoice) {
   gameActive = false;
 }
 
+/**
+ * @brief Processes an AI vs AI game move.
+ */
 void processAIvsAI() {
   String ai1Choice = generateAIChoice();
   String ai2Choice = generateAIChoice();
@@ -126,6 +180,11 @@ void processAIvsAI() {
   gameActive = false;
 }
 
+/**
+ * @brief Processes the received move based on the current game mode.
+ * 
+ * @param receivedMessage The received move or command.
+ */
 void processMove(String receivedMessage) {
   if (gameMode == 0) {
     processHumanVsAI(receivedMessage);
@@ -134,6 +193,11 @@ void processMove(String receivedMessage) {
   }
 }
 
+/**
+ * @brief Handles the game mode based on the received message.
+ * 
+ * @param receivedMessage The received message indicating the desired game mode.
+ */
 void handleGameMode(String receivedMessage) {
   if (receivedMessage == "modes 0") {
     gameMode = 0;
@@ -150,6 +214,11 @@ void handleGameMode(String receivedMessage) {
   saveConfig(config);
 }
 
+/**
+ * @brief Processes the received message and performs the corresponding action.
+ * 
+ * @param receivedMessage The received message to process.
+ */
 void processReceivedMessage(String receivedMessage) {
   if (receivedMessage == "new") {
     initializeGame();
@@ -169,11 +238,19 @@ void processReceivedMessage(String receivedMessage) {
   }
 }
 
+/**
+ * @brief Setup function to initialize the game.
+ * 
+ * Initializes the serial communication and random seed.
+ */
 void setup() {
   Serial.begin(9600);
   randomSeed(analogRead(0));
 }
 
+/**
+ * @brief Main loop to read and process received messages.
+ */
 void loop() {
   if (Serial.available() > 0) {
     String receivedMessage = Serial.readStringUntil('\n');

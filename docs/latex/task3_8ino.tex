@@ -1,0 +1,285 @@
+\doxysection{src/task3.ino File Reference}
+\hypertarget{task3_8ino}{}\label{task3_8ino}\index{src/task3.ino@{src/task3.ino}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structGameConfig}{Game\+Config}}
+\begin{DoxyCompactList}\small\item\em Represents the game configuration structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{task3_8ino_ad716c01f5bfe9e4efd9bd6bb9ff2e0b0}{save\+Config}} (const \mbox{\hyperlink{structGameConfig}{Game\+Config}} \&config)
+\begin{DoxyCompactList}\small\item\em Converts the game configuration into an INI-\/style string. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{task3_8ino_a46e835c64770b8490ce67ee8d398eb8b}{parse\+Config\+Line}} (const String \&line, int \&\mbox{\hyperlink{task3_8ino_aa535a3201e6b21c12dc05f4fa9a3e7c2}{game\+Mode}}, String \mbox{\hyperlink{task3_8ino_afabb3572219a0d60b97b155e1e18a480}{player\+Choices}}\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Parses a single line of configuration in INI format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{task3_8ino_a7aa1b32038bf2ca21e6b9087b9889d05}{load\+Config}} (const String \&ini\+Config, int \&\mbox{\hyperlink{task3_8ino_aa535a3201e6b21c12dc05f4fa9a3e7c2}{game\+Mode}}, String \mbox{\hyperlink{task3_8ino_afabb3572219a0d60b97b155e1e18a480}{player\+Choices}}\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Loads the configuration from an INI-\/style string. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{task3_8ino_abfd998c018b41d873e2ee32700685a89}{generate\+AIChoice}} ()
+\begin{DoxyCompactList}\small\item\em Generates a random choice for the AI. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{task3_8ino_ab64817c6db9cc5df3997c4de00c0ec05}{determine\+Winner}} (String player1, String player2)
+\begin{DoxyCompactList}\small\item\em Determines the winner between two players. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{task3_8ino_a069ff21ffa873ae968977f1f61f39e6c}{is\+Valid\+Move}} (String move)
+\begin{DoxyCompactList}\small\item\em Validates if a given move is a valid choice (Rock, Paper, or Scissors). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_a5901170f346e94ad9e3f88c0c7275522}{initialize\+Game}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the game state, starting a new game. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_aac36e550c284973980abe78dd1cbb2cf}{process\+Human\+Vs\+AI}} (String human\+Choice)
+\begin{DoxyCompactList}\small\item\em Processes a Human vs AI game move. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_a79d8fae70136ae34c18d5f117203af8a}{process\+AIvs\+AI}} ()
+\begin{DoxyCompactList}\small\item\em Processes an AI vs AI game move. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_af32d2ef7a2cc5416f30fa53034a69dd1}{process\+Move}} (String received\+Message)
+\begin{DoxyCompactList}\small\item\em Processes the received move based on the current game mode. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_ad6612373c399e64f8fb4ecc6a3d12b5c}{handle\+Game\+Mode}} (String received\+Message)
+\begin{DoxyCompactList}\small\item\em Handles the game mode based on the received message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_a420bd28dcaaa115f46bc6aef272c75f1}{process\+Received\+Message}} (String received\+Message)
+\begin{DoxyCompactList}\small\item\em Processes the received message and performs the corresponding action. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Setup function to initialize the game. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{task3_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Main loop to read and process received messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{task3_8ino_a4361aa42f2e08e5ceb49425b6675f7bf}{game\+Active}} = false
+\item 
+String \mbox{\hyperlink{task3_8ino_afabb3572219a0d60b97b155e1e18a480}{player\+Choices}} \mbox{[}3\mbox{]} = \{"{}Rock"{}, "{}Paper"{}, "{}Scissors"{}\}
+\item 
+int \mbox{\hyperlink{task3_8ino_aa535a3201e6b21c12dc05f4fa9a3e7c2}{game\+Mode}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{task3_8ino_ab64817c6db9cc5df3997c4de00c0ec05}\index{task3.ino@{task3.ino}!determineWinner@{determineWinner}}
+\index{determineWinner@{determineWinner}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{determineWinner()}{determineWinner()}}
+{\footnotesize\ttfamily \label{task3_8ino_ab64817c6db9cc5df3997c4de00c0ec05} 
+String determine\+Winner (\begin{DoxyParamCaption}\item[{String}]{player1}{, }\item[{String}]{player2}{}\end{DoxyParamCaption})}
+
+
+
+Determines the winner between two players. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player1} & The first player\textquotesingle{}s choice. \\
+\hline
+{\em player2} & The second player\textquotesingle{}s choice. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string indicating the result of the match\+: "{}\+Draw"{}, "{}\+Player 1 wins!"{}, or "{}\+Player 2 wins!"{}. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_abfd998c018b41d873e2ee32700685a89}\index{task3.ino@{task3.ino}!generateAIChoice@{generateAIChoice}}
+\index{generateAIChoice@{generateAIChoice}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{generateAIChoice()}{generateAIChoice()}}
+{\footnotesize\ttfamily \label{task3_8ino_abfd998c018b41d873e2ee32700685a89} 
+String generate\+AIChoice (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Generates a random choice for the AI. 
+
+\begin{DoxyReturn}{Returns}
+A string representing the AI\textquotesingle{}s choice\+: Rock, Paper, or Scissors. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_ad6612373c399e64f8fb4ecc6a3d12b5c}\index{task3.ino@{task3.ino}!handleGameMode@{handleGameMode}}
+\index{handleGameMode@{handleGameMode}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{handleGameMode()}{handleGameMode()}}
+{\footnotesize\ttfamily \label{task3_8ino_ad6612373c399e64f8fb4ecc6a3d12b5c} 
+void handle\+Game\+Mode (\begin{DoxyParamCaption}\item[{String}]{received\+Message}{}\end{DoxyParamCaption})}
+
+
+
+Handles the game mode based on the received message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em received\+Message} & The received message indicating the desired game mode. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{task3_8ino_a5901170f346e94ad9e3f88c0c7275522}\index{task3.ino@{task3.ino}!initializeGame@{initializeGame}}
+\index{initializeGame@{initializeGame}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{initializeGame()}{initializeGame()}}
+{\footnotesize\ttfamily \label{task3_8ino_a5901170f346e94ad9e3f88c0c7275522} 
+void initialize\+Game (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the game state, starting a new game. 
+
+\Hypertarget{task3_8ino_a069ff21ffa873ae968977f1f61f39e6c}\index{task3.ino@{task3.ino}!isValidMove@{isValidMove}}
+\index{isValidMove@{isValidMove}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{isValidMove()}{isValidMove()}}
+{\footnotesize\ttfamily \label{task3_8ino_a069ff21ffa873ae968977f1f61f39e6c} 
+bool is\+Valid\+Move (\begin{DoxyParamCaption}\item[{String}]{move}{}\end{DoxyParamCaption})}
+
+
+
+Validates if a given move is a valid choice (Rock, Paper, or Scissors). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em move} & The move to validate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the move is valid, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_a7aa1b32038bf2ca21e6b9087b9889d05}\index{task3.ino@{task3.ino}!loadConfig@{loadConfig}}
+\index{loadConfig@{loadConfig}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{loadConfig()}{loadConfig()}}
+{\footnotesize\ttfamily \label{task3_8ino_a7aa1b32038bf2ca21e6b9087b9889d05} 
+bool load\+Config (\begin{DoxyParamCaption}\item[{const String \&}]{ini\+Config}{, }\item[{int \&}]{game\+Mode}{, }\item[{String}]{player\+Choices}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Loads the configuration from an INI-\/style string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ini\+Config} & The INI-\/style string containing the configuration. \\
+\hline
+{\em game\+Mode} & The game mode to be set. \\
+\hline
+{\em player\+Choices} & Array of player choices to be set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the configuration was successfully loaded, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_afe461d27b9c48d5921c00d521181f12f}\index{task3.ino@{task3.ino}!loop@{loop}}
+\index{loop@{loop}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{task3_8ino_afe461d27b9c48d5921c00d521181f12f} 
+void loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Main loop to read and process received messages. 
+
+\Hypertarget{task3_8ino_a46e835c64770b8490ce67ee8d398eb8b}\index{task3.ino@{task3.ino}!parseConfigLine@{parseConfigLine}}
+\index{parseConfigLine@{parseConfigLine}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{parseConfigLine()}{parseConfigLine()}}
+{\footnotesize\ttfamily \label{task3_8ino_a46e835c64770b8490ce67ee8d398eb8b} 
+bool parse\+Config\+Line (\begin{DoxyParamCaption}\item[{const String \&}]{line}{, }\item[{int \&}]{game\+Mode}{, }\item[{String}]{player\+Choices}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Parses a single line of configuration in INI format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & The configuration line to parse. \\
+\hline
+{\em game\+Mode} & The game mode to be updated. \\
+\hline
+{\em player\+Choices} & Array of player choices to be updated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the line is parsed successfully, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_a79d8fae70136ae34c18d5f117203af8a}\index{task3.ino@{task3.ino}!processAIvsAI@{processAIvsAI}}
+\index{processAIvsAI@{processAIvsAI}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{processAIvsAI()}{processAIvsAI()}}
+{\footnotesize\ttfamily \label{task3_8ino_a79d8fae70136ae34c18d5f117203af8a} 
+void process\+AIvs\+AI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Processes an AI vs AI game move. 
+
+\Hypertarget{task3_8ino_aac36e550c284973980abe78dd1cbb2cf}\index{task3.ino@{task3.ino}!processHumanVsAI@{processHumanVsAI}}
+\index{processHumanVsAI@{processHumanVsAI}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{processHumanVsAI()}{processHumanVsAI()}}
+{\footnotesize\ttfamily \label{task3_8ino_aac36e550c284973980abe78dd1cbb2cf} 
+void process\+Human\+Vs\+AI (\begin{DoxyParamCaption}\item[{String}]{human\+Choice}{}\end{DoxyParamCaption})}
+
+
+
+Processes a Human vs AI game move. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em human\+Choice} & The human player\textquotesingle{}s choice. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{task3_8ino_af32d2ef7a2cc5416f30fa53034a69dd1}\index{task3.ino@{task3.ino}!processMove@{processMove}}
+\index{processMove@{processMove}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{processMove()}{processMove()}}
+{\footnotesize\ttfamily \label{task3_8ino_af32d2ef7a2cc5416f30fa53034a69dd1} 
+void process\+Move (\begin{DoxyParamCaption}\item[{String}]{received\+Message}{}\end{DoxyParamCaption})}
+
+
+
+Processes the received move based on the current game mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em received\+Message} & The received move or command. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{task3_8ino_a420bd28dcaaa115f46bc6aef272c75f1}\index{task3.ino@{task3.ino}!processReceivedMessage@{processReceivedMessage}}
+\index{processReceivedMessage@{processReceivedMessage}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{processReceivedMessage()}{processReceivedMessage()}}
+{\footnotesize\ttfamily \label{task3_8ino_a420bd28dcaaa115f46bc6aef272c75f1} 
+void process\+Received\+Message (\begin{DoxyParamCaption}\item[{String}]{received\+Message}{}\end{DoxyParamCaption})}
+
+
+
+Processes the received message and performs the corresponding action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em received\+Message} & The received message to process. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{task3_8ino_ad716c01f5bfe9e4efd9bd6bb9ff2e0b0}\index{task3.ino@{task3.ino}!saveConfig@{saveConfig}}
+\index{saveConfig@{saveConfig}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{saveConfig()}{saveConfig()}}
+{\footnotesize\ttfamily \label{task3_8ino_ad716c01f5bfe9e4efd9bd6bb9ff2e0b0} 
+String save\+Config (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structGameConfig}{Game\+Config}} \&}]{config}{}\end{DoxyParamCaption})}
+
+
+
+Converts the game configuration into an INI-\/style string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & The game configuration structure to save. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A string representation of the configuration in INI format. 
+\end{DoxyReturn}
+\Hypertarget{task3_8ino_a4fc01d736fe50cf5b977f755b675f11d}\index{task3.ino@{task3.ino}!setup@{setup}}
+\index{setup@{setup}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{task3_8ino_a4fc01d736fe50cf5b977f755b675f11d} 
+void setup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Setup function to initialize the game. 
+
+Initializes the serial communication and random seed. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{task3_8ino_a4361aa42f2e08e5ceb49425b6675f7bf}\index{task3.ino@{task3.ino}!gameActive@{gameActive}}
+\index{gameActive@{gameActive}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{gameActive}{gameActive}}
+{\footnotesize\ttfamily \label{task3_8ino_a4361aa42f2e08e5ceb49425b6675f7bf} 
+bool game\+Active = false}
+
+\Hypertarget{task3_8ino_aa535a3201e6b21c12dc05f4fa9a3e7c2}\index{task3.ino@{task3.ino}!gameMode@{gameMode}}
+\index{gameMode@{gameMode}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{gameMode}{gameMode}}
+{\footnotesize\ttfamily \label{task3_8ino_aa535a3201e6b21c12dc05f4fa9a3e7c2} 
+int game\+Mode = 0}
+
+\Hypertarget{task3_8ino_afabb3572219a0d60b97b155e1e18a480}\index{task3.ino@{task3.ino}!playerChoices@{playerChoices}}
+\index{playerChoices@{playerChoices}!task3.ino@{task3.ino}}
+\doxysubsubsection{\texorpdfstring{playerChoices}{playerChoices}}
+{\footnotesize\ttfamily \label{task3_8ino_afabb3572219a0d60b97b155e1e18a480} 
+String player\+Choices\mbox{[}3\mbox{]} = \{"{}Rock"{}, "{}Paper"{}, "{}Scissors"{}\}}
+
