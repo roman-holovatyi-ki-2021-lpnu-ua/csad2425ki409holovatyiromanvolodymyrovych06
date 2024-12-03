@@ -1,9 +1,9 @@
-name: task4
+name: task5
 
 on:
   push:
     branches:
-      - feature/develop/task4
+      - feature/develop/task5
   pull_request:
 
 jobs:

@@ -23,11 +23,12 @@ struct GameConfig {
 String saveConfig(const GameConfig &config) {
   String iniConfig;
   
-  iniConfig += "gameMode=" + String(config.gameMode) + "\n";
-  iniConfig += "playerChoices1=" + config.playerChoices[0] + "\n";
-  iniConfig += "playerChoices2=" + config.playerChoices[1] + "\n";
-  iniConfig += "playerChoices3=" + config.playerChoices[2] + "\n";
+  iniConfig += "gameMode=" + String(config.gameMode) + " ";
+  iniConfig += "playerChoices1=" + config.playerChoices[0] + " ";
+  iniConfig += "playerChoices2=" + config.playerChoices[1] + " ";
+  iniConfig += "playerChoices3=" + config.playerChoices[2] + " ";
   
+  Serial.println(iniConfig);
   return iniConfig;
 }
 
@@ -229,6 +230,8 @@ void processReceivedMessage(String receivedMessage) {
     }
   } else if (receivedMessage.startsWith("modes")) {
     handleGameMode(receivedMessage);
+  } else if (receivedMessage.startsWith("save")) {
+    saveConfig(receivedMessage);
   } else if (receivedMessage.startsWith("game")) {
     loadConfig(receivedMessage, gameMode, playerChoices);
   } else if (gameActive) {
