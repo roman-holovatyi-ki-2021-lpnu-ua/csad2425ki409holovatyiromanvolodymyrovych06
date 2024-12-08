@@ -64,8 +64,6 @@ def user_input_thread(ser):
                 global exit_program
                 exit_program = True
                 break
-            elif user_message.lower().startswith('save'):
-                save_game_config(user_message)
             elif user_message.lower().startswith('load'):
                 file_path = input("Enter the path to the configuration file: ")
                 load_game_config(file_path, ser)
@@ -86,6 +84,8 @@ def monitor_incoming_messages(ser):
             last_received_time = time.time()
             if not can_input:
                 can_input = True
+            if received.startswith("game"):
+                save_game_config(received)
 
 
 def save_game_config(message):
