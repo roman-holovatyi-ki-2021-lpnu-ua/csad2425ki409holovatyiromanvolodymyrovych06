@@ -3,6 +3,7 @@
 bool gameActive = false;
 String playerChoices[3] = {"Rock", "Paper", "Scissors"};
 int gameMode = 0;
+String player1Choice = "";
 
 /**
  * @brief Represents the game configuration structure.
@@ -143,6 +144,7 @@ bool isValidMove(String move) {
  */
 void initializeGame() {
   gameActive = true;
+  player1Choice = "";
   Serial.println("Game started!");
 }
 
@@ -163,6 +165,35 @@ void processHumanVsAI(String humanChoice) {
   String result = determineWinner(humanChoice, aiChoice);
   Serial.println(result);
   gameActive = false;
+}
+
+/**
+ * @brief Handles game logic for Human vs Human mode.
+ * 
+ * Saves Player 1's move and waits for Player 2. Determines the winner after 
+ * both moves are made.
+ *
+ * @param humanChoice The current player's move ("Rock", "Paper", or "Scissors").
+ */
+void processHumanVsHuman(String humanChoice) {
+  if (player1Choice == "") {
+    if (!isValidMove(humanChoice)) {
+      Serial.println("Invalid move. Valid moves are: Rock, Paper, Scissors.");
+      return;
+    }
+    player1Choice = humanChoice;
+    Serial.println("Player 1 choice saved. Waiting for Player 2...");
+  } else {
+    if (!isValidMove(humanChoice)) {
+      Serial.println("Invalid move. Valid moves are: Rock, Paper, Scissors.");
+      return;
+    }
+    String result = determineWinner(player1Choice, humanChoice);
+    Serial.println("Player 1 chose: " + player1Choice);
+    Serial.println("Player 2 chose: " + humanChoice);
+    Serial.println(result);
+    gameActive = false;
+  }
 }
 
 /**
@@ -188,6 +219,8 @@ void processAIvsAI() {
 void processMove(String receivedMessage) {
   if (gameMode == 0) {
     processHumanVsAI(receivedMessage);
+  } else if (gameMode == 1) {
+    processHumanVsHuman(receivedMessage);
   } else if (gameMode == 2) {
     processAIvsAI();
   }
