@@ -1,0 +1,4 @@
+.pio/
+.pytest_cache/
+docs/
+python_project/htmlcov/
